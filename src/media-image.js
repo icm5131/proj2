@@ -53,7 +53,8 @@ export class mediaImage extends DDD {
 
     static get properties() {
         return {
-            ...super.properties
+            ...super.properties,
+            imgSrc: { type: String, atribute: "img-src" }
         };
     }
 }
