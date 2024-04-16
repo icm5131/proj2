@@ -13,6 +13,7 @@ export class mediaImage extends DDD {
         this.imgSrc = "";
         this.caption = "Short image description";
         this.description = "Full description of image";
+        this.primary = false;
     }
 
     static get styles() {
@@ -23,18 +24,14 @@ export class mediaImage extends DDD {
                     display: inline-flex;
                     flex-wrap: wrap;
                     --img-bord-color-primary: var(--ddd-theme-default-wonderPurple);
-                    --box-shadow: -1px 1px var(--ddd-theme-default-potentialMidnight),
-                    -2px 2px var(--ddd-theme-default-potentialMidnight),
-                    -3px 3px var(--ddd-theme-default-potentialMidnight),
-                    -4px 4px var(--ddd-theme-default-potentialMidnight),
-                    -5px 5px var(--ddd-theme-default-potentialMidnight),
-                    -6px 6px var(--ddd-theme-default-potentialMidnight);
+                    --img-bord-color-secondary: var(--ddd-theme-default-futureLime);
+                    --box-shadow: -16px 16px var(--ddd-theme-default-potentialMidnight);
                 }
 
                 .img-color-bord {
-                    background-color: var(--img-bord-color-primary);
+                    background-color: var(--img-bord-color-secondary);
                     text-align: center;
-                    width: 36vw;
+                    width: 20vw;
                     padding: var(--ddd-spacing-4);
                     /* border */
                     border: var(--ddd-border-lg);
@@ -53,8 +50,12 @@ export class mediaImage extends DDD {
                 .img-color-bord:focus {
                     box-shadow: var(--box-shadow);
                     -webkit-transform: translate(var(--ddd-spacing-4));
-                    transform: translate(var(--ddd-spacing-4));
-                    transition: .5s ease;
+                    transform: translate(16px, -16px);
+                    transition: all .3s ease-in;
+                }
+
+                .img-color-bord:primary {
+                    background-color: var(--img-bord-color-primary);
                 }
             `
         ];
@@ -62,7 +63,7 @@ export class mediaImage extends DDD {
 
     render() {
         return html`
-        <div class="img-color-bord">
+        <div class="img-color-bord" ?primary="${this.primary}">
             <img class="image" src="${this.imgSrc}" alt="${this.caption}">
         </div>
         `;
@@ -72,8 +73,9 @@ export class mediaImage extends DDD {
         return {
             ...super.properties,
             imgSrc: { type: String, attribute: "img-src", reflect: true },
-            caption: { type: String },
-            description: { type: String }
+            caption: { type: String, reflect: true },
+            description: { type: String, reflect: true },
+            primary: { type: Boolean, reflect: true }
         };
     }
 }
