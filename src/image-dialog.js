@@ -19,24 +19,46 @@ export class playList extends DDD {
 
                 .wrap {
                     margin: var(--ddd-spacing-3);
-                    display: inline-flex;
-                    flex-wrap: wrap;
                     width: 80%;
                     border: var(--ddd-border-lg);
                     border-color: var(--ddd-theme-default-potentialMidnight);
+                    text-align: center;
                 }
 
                 .info {
                     width: 100%;
-                    text-align: center;
+                    display: inline-flex;
+                    flex-wrap: wrap;
                 }
 
                 .img-count {
-                    width: 20%;
+                    width: 10%;
                 }
 
                 .img-description {
                     width: 80%;
+                }
+
+                .img-area {
+                    display: inline-flex;
+                    flex-wrap: wrap;
+                    width: 100%;
+                    margin: auto;
+                }
+
+                .img-selection {
+                    width: 10%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .img-container {
+                    width: 80%;
+                }
+
+                .img {
+                    width: 20vw;
                 }
             `
         ];
@@ -54,10 +76,15 @@ export class playList extends DDD {
                     </div>
                 </div>    
                 <div class="img-area">
-                    <div class="left">
+                    <div class="img-selection">
                         <-
                     </div>
-                    <img src="https://i.redd.it/op96es9026wy.png">
+                    <div class="img-container">
+                        <img class="img" src="https://i.redd.it/op96es9026wy.png">
+                    </div>
+                    <div class="img-selection">
+                        ->
+                    </div>
                 </div>
             </div>
         `;
