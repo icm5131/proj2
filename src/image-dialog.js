@@ -10,13 +10,31 @@ export class imageDialog extends DDD {
 
     constructor() {
         super();
-        this.opened = false;
+        this.opened = true;
+        this.title = "img-gallery";
+        this.image = [];
+        this.imageNumber = 1; //current number shown
+        this.totalImageNumber = 5;
     }
 
     static get styles() {
-        return [ 
+        return [
             super.styles,
             css`
+
+                /* :host {
+                    display: none;
+                } */
+
+                :host([opened]) {
+                    display:flex;
+                    z-index: 10000;
+                    position: fixed;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                }
 
                 .wrap {
                     margin: var(--ddd-spacing-3);
@@ -70,30 +88,65 @@ export class imageDialog extends DDD {
         ];
     }
 
+    closeBtn() {
+        this.opened = false;
+    }
+
+    firstUpdated() {
+        var data = document.querySelectorAll('media-image');
+        data.forEach(image => {
+            this.image.push(image.getAttribute('imgSrc'));
+        })
+
+        console.log(this.image);
+
+        window.addEventListener('image-clicked', (e) => {
+            var url = e.target.attributes.imgSrc.nodeValue;
+            this.imageNumber = this.image.indexOf(url) + 1;
+            this.visable = true;
+        })
+        if (this.imageNumber < this.totalImageNumber)
+            this.imageNumber = this.imageNumber + 1;
+        else {
+            this.imageNumber = 1;
+        }
+        this.requestUpdate();
+    }
+
+    leftClick() {
+        if (this.imageNumber > 1) {
+            this.imageNumber = this.imageNumber - 1;
+        }
+        else {
+            this.imageNumber = this.totalImageNumber;
+        }
+        this.requestUpdate();
+    }
+    
+
     render() {
-        /* !this.opened ? "" : */ return html`
+        return  /* (!this.opened) ? '' :  */ html`
             <div class="wrap">
                 <div class="info">
                     <div class="img-count">
-                        2/2
+                        ${this.imageNumber}/${this.totalImageNumber}
                     </div>
                     <div class="img-description">
                         as;dflakjs;flkj
                     </div>
                     <div class="close">
-                        X
+                        <button class="exit" @click="${this.closeBtn}">X</button>
                     </div>
                 </div>    
                 <div class="img-area">
                     <div class="img-selection">
-                        <-
+                        <button class="left"><-</button>
                     </div>
                     <div class="img-container">
-                        <img class="img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHWH39-n22ql-S0elN3GFE2iHy4_x9mmUzhCACZFq9kg&s">
-                        <img class="img" src="https://i.redd.it/op96es9026wy.png">
+                        <img class="img" src="${this.image(this.imageNumber-1)}">
                     </div>
                     <div class="img-selection">
-                        ->
+                        <button class="right">-></button>
                     </div>
                 </div>
             </div>
@@ -103,7 +156,11 @@ export class imageDialog extends DDD {
     static get properties() {
         return {
             ...super.properties,
-            opened: { type: Boolean }
+            opened: { type: Boolean },
+            title: { type: String },
+            image: { type: Array },
+            imageNumber: { type: Number },
+            totalImageNumber: { type: Number }
         };
     }
 }
