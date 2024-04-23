@@ -18,84 +18,106 @@ export class imageDialog extends DDD {
     }
 
     static get styles() {
-        return [
-            super.styles,
-            css`
-
-                /* :host {
-                    display: none;
-                } */
-
-                :host([opened]) {
-                    display:flex;
-                    z-index: 10000;
-                    position: fixed;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                }
-
-                .wrap {
-                    margin: var(--ddd-spacing-3);
-                    width: 95vw;
-                    height: 95vh;
-                    border: var(--ddd-border-lg);
-                    border-color: var(--ddd-theme-default-potentialMidnight);
-                    text-align: center;
-                }
-
-                .info {
-                    width: 100%;
-                    display: inline-flex;
-                    flex-wrap: wrap;
-                    margin: var(--ddd-spacing-4);
-                }
-
-                .img-count {
-                    width: 10%;
-                }
-
-                .img-description {
-                    width: 80%;
-                }
-
-                .img-area {
-                    display: inline-flex;
-                    flex-wrap: wrap;
-                    width: 100%;
-                    margin: auto;
-                }
-
-                .img-selection {
-                    width: 10%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-
-                .img-container {
-                    width: 80%;
-                    height: 500px;
-                    overflow: hidden;
-                }
-
-                .img {
-                    margin: auto;
-                    width: 70%;
-                }
-            `
-        ];
+        return css`
+    
+          :host {
+            display: none;
+          }
+          :host([visible]) {
+            display: flex;
+            z-index: 10000;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+          }
+    
+    
+          #image {
+            margin: 20px;
+            padding: 20px;
+            max-width:300px;
+            max-height:300px;
+            position: absolute;
+            left: 12%;
+            right: 12%;
+            top: 15%;
+          }
+    
+          .backdrop
+          {
+            margin: auto;
+            padding: 8px;
+            width:500px;
+            height:500px;
+            background-color: var(--ddd-theme-default-slateLight);
+            color: black;
+            position: relative;
+            border: var(--ddd-border-lg);
+            border-color: var(--ddd-theme-default-potentialMidnight);
+            border-radius: var(--ddd-radius-md);
+          }
+    
+            .topRow
+              {
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+              }
+    
+            .currentNum
+            {
+              margin: 8px;
+              display: flex;
+              justify-content: left;
+            }
+    
+            .closePopupButton
+            {
+            margin: 8px;
+            display: flex;
+            justify-content: right
+            }
+    
+            .description
+            {
+                align-self: center;
+                display: flex;
+                justify-content: center;
+            }
+    
+            .slide-image {
+              width: 100%;
+              min-height: 200px;
+              height: auto;
+              max-height: 400px;
+              padding: 10px;
+              margin: 0 auto;
+            }     
+    
+            .imageLoop
+            {
+                margin: 8px;
+                display: flex;
+                justify-content: space-between;  
+                position: absolute;
+               bottom: 0;
+               width: 95%;
+            }
+          
+    
+        `;
     }
 
     closeBtn() {
-        this.opened = false;
+        this.visible = false;
     }
 
     firstUpdated() {
         var data = document.querySelectorAll('media-image');
         data.forEach(image => {
-            this.image.push(image.getAttribute('imgSrc'));
+            this.image.push(image.getAttribute('img-src'));
         })
 
         console.log(this.image);
@@ -103,8 +125,11 @@ export class imageDialog extends DDD {
         window.addEventListener('image-clicked', (e) => {
             var url = e.target.attributes.imgSrc.nodeValue;
             this.imageNumber = this.image.indexOf(url) + 1;
-            this.visable = true;
+            this.visible = true;
         })
+    }
+
+    rightClick() {
         if (this.imageNumber < this.totalImageNumber)
             this.imageNumber = this.imageNumber + 1;
         else {
@@ -112,44 +137,46 @@ export class imageDialog extends DDD {
         }
         this.requestUpdate();
     }
-
     leftClick() {
-        if (this.imageNumber > 1) {
+        if (this.imageNumber > 1)
             this.imageNumber = this.imageNumber - 1;
-        }
         else {
             this.imageNumber = this.totalImageNumber;
         }
         this.requestUpdate();
     }
-    
 
     render() {
-        return  /* (!this.opened) ? '' :  */ html`
-            <div class="wrap">
-                <div class="info">
-                    <div class="img-count">
-                        ${this.imageNumber}/${this.totalImageNumber}
-                    </div>
-                    <div class="img-description">
-                        as;dflakjs;flkj
-                    </div>
-                    <div class="close">
-                        <button class="exit" @click="${this.closeBtn}">X</button>
-                    </div>
-                </div>    
-                <div class="img-area">
-                    <div class="img-selection">
-                        <button class="left"><-</button>
-                    </div>
-                    <div class="img-container">
-                        <img class="img" src="${this.image(this.imageNumber-1)}">
-                    </div>
-                    <div class="img-selection">
-                        <button class="right">-></button>
-                    </div>
-                </div>
-            </div>
+        return (!this.visible) ? `` : html`
+        <div class="backdrop">
+        <div class="topRow">
+        <div>
+          <div class="slide-image-number">${this.imageNumber}</div> of
+          <div class="total-image-number">${this.totalImageNumber}</div>
+      </div>
+    
+        <button class="closePopupButton" @click="${this.closeBtn}">
+        x
+      </button>
+    
+    </div>
+    
+    
+    
+    <div class="slide-image">
+        <img id="image" src= ${this.image[this.imageNumber - 1]} alt = "slide">
+        </div>
+    
+        <div class="imageLoop">
+            <button class="leftButton" @click="${this.leftClick}">
+            ←
+      </button>
+            <button class="rightButton" @click="${this.rightClick}">
+            →
+      </button>
+        </div>
+        </div>
+        
         `;
     }
 

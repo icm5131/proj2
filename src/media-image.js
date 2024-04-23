@@ -16,6 +16,20 @@ export class mediaImage extends DDD {
         this.primary = false;
     }
 
+    handleClick() {
+        console.log("Image Clicked");
+
+        const evt = new CustomEvent("image-clicked", {
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+            detail: {
+                opened: true,
+            },
+        });
+        this.dispatchEvent(evt);
+    }
+
     static get styles() {
         return [ 
             super.styles,
@@ -63,7 +77,7 @@ export class mediaImage extends DDD {
 
     render() {
         return html`
-        <div class="img-color-bord" ?primary="${this.primary}">
+        <div class="img-color-bord" ?primary="${this.primary}" @click="${this.handleClick}">
             <img class="image" src="${this.imgSrc}" alt="${this.caption}">
         </div>
         `;
