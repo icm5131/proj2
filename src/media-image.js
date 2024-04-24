@@ -71,22 +71,34 @@ export class mediaImage extends DDD {
                 .img-color-bord:primary {
                     background-color: var(--img-bord-color-primary);
                 }
+
+                .caption {
+                    font-size: var(--ddd-font-size-4xs);
+                    background-color: var(--ddd-theme-default-shrineLight);
+                    border: var(--ddd-border-sm);
+                    border-radius: var(--ddd-radius-md);
+                }
             `
         ];
     }
 
     render() {
         return html`
-        <div class="img-color-bord" ?primary="${this.primary}" @click="${this.handleClick}">
-            <img class="image" src="${this.imgSrc}" alt="${this.caption}">
-        </div>
+            <div class="wrapper">
+                <div class="img-color-bord" ?primary="${this.primary}" @click="${this.handleClick}">
+                    <img class="image" src="${this.imgSrc}" alt="${this.caption}">
+                </div>
+                <div class="caption">
+                    ${this.caption}
+                </div>
+            </div>
         `;
     }
 
     static get properties() {
         return {
             ...super.properties,
-            imgSrc: { type: String, attribute: "img-src", reflect: true },
+            imgSrc: { type: String, reflect: true },
             caption: { type: String, reflect: true },
             description: { type: String, reflect: true },
             primary: { type: Boolean, reflect: true }
