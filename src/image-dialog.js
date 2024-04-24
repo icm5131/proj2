@@ -17,7 +17,6 @@ export class imageDialog extends DDD {
     this.imageDescription = [];
     this.imageNumber = 1; //current number shown
     this.totalImageNumber = null;
-    this.primary = false;
   }
 
   static get styles() {
@@ -42,7 +41,7 @@ export class imageDialog extends DDD {
         padding: var(--ddd-spacing-4);
         width:80vw;
         height: 80vh;
-        background-color: var(--ddd-theme-default-potentialMidnight);
+        background-color: var(--ddd-theme-default-skyLight);
         color: black;
         position: relative;
         border: var(--ddd-border-lg);
@@ -74,16 +73,15 @@ export class imageDialog extends DDD {
       }
     
       .slide-image {
-        border: var(--ddd-border-md);
-        border-color: black;
         text-align: center;
         margin: var(--ddd-spacing-4);
         height: 80%;
+        overflow: hidden;
       }     
 
       .image {
+        min-width: 40%;
         max-width:80%;
-        max-height:80%;
         margin: auto;
       }
     
@@ -144,7 +142,7 @@ export class imageDialog extends DDD {
   render() {
     return (!this.opened) ? `` : html`
       <div class="background"></div>
-      <div class="wrapper" ?primary="${this.primary}">
+      <div class="wrapper">
         <div class="info-panel">
           <div class="image-counter">
             ${this.imageNumber}/${this.totalImageNumber}

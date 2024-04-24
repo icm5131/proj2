@@ -13,7 +13,7 @@ export class mediaImage extends DDD {
         this.imgSrc = "";
         this.caption = "Short image description";
         this.description = "Full description of image";
-        this.primary = false;
+        this.primary = "false";
     }
 
     handleClick() {
@@ -100,7 +100,7 @@ export class mediaImage extends DDD {
             imgSrc: { type: String, reflect: true },
             caption: { type: String, reflect: true },
             description: { type: String, reflect: true },
-            primary: { type: Boolean, reflect: true }
+            primary: { type: String, reflect: true }
         };
     }
 }
