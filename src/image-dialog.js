@@ -16,7 +16,8 @@ export class imageDialog extends DDD {
     this.imageCaption = [];
     this.imageDescription = [];
     this.imageNumber = 1; //current number shown
-    this.totalImageNumber = 5;
+    this.totalImageNumber = null;
+    this.primary = false;
   }
 
   static get styles() {
@@ -35,22 +36,13 @@ export class imageDialog extends DDD {
         left: 0;
         right: 0;
       }
-      
-      .image {
-        max-width:80%;
-        max-height:80%;
-        position: absolute;
-        left: 12%;
-        right: 12%;
-        top: 15%;
-      }
-    
+
       .wrapper {
         margin: auto;
-        padding: 8px;
+        padding: var(--ddd-spacing-4);
         width:80vw;
         height: 80vh;
-        background-color: var(--ddd-theme-default-slateLight);
+        background-color: var(--ddd-theme-default-potentialMidnight);
         color: black;
         position: relative;
         border: var(--ddd-border-lg);
@@ -60,31 +52,40 @@ export class imageDialog extends DDD {
     
       .info-panel {
         width: 100%;
-        display: flex;
+        display: grid;
+        gap: var(--ddd-spacing-5);
         align-items: center;
         justify-content: space-evenly;
       }
     
       .close {
-        margin: 8px;
-        display: flex;
-        justify-content: right
+        grid-column-start: 3;
       }
     
       .description {
-        align-self: center;
-        display: flex;
-        justify-content: center;
+        grid-column-start: 2;
+        width: 80%;
+        margin: auto;
+
+      }
+
+      .image-counter {
+        grid-column-start: 1;
       }
     
       .slide-image {
-        width: 100%;
-        min-height: 200px;
-        height: auto;
-        max-height: 400px;
-        padding: 10px;
-        margin: 0 auto;
+        border: var(--ddd-border-md);
+        border-color: black;
+        text-align: center;
+        margin: var(--ddd-spacing-4);
+        height: 80%;
       }     
+
+      .image {
+        max-width:80%;
+        max-height:80%;
+        margin: auto;
+      }
     
       .image-control {
         margin: 8px;
@@ -107,14 +108,17 @@ export class imageDialog extends DDD {
       this.imageUrl.push(image.getAttribute('imgSrc'));
       this.imageCaption.push(image.getAttribute('caption'));
       this.imageDescription.push(image.getAttribute('description'));
+      this.primary = image.getAttribute('primary');
     })
 
-    console.log(this.imageUrl, this.imageCaption, this.imageDescription);
+    console.log(this.primary);
+    console.log(this.imageDescription);
+    console.log(this.imageCaption);
+    console.log(this.imageUrl);
+    this.totalImageNumber = this.imageUrl.length;
 
     window.addEventListener('image-clicked', (e) => {
       var url = e.target.attributes.imgSrc.nodeValue;
-      var cap = e.target.attributes.caption.nodeValue;
-      var desc = e.target.attributes.description.nodeValue;
       this.imageNumber = this.imageUrl.indexOf(url) + 1;
       this.opened = true;
     })
@@ -139,7 +143,8 @@ export class imageDialog extends DDD {
 
   render() {
     return (!this.opened) ? `` : html`
-      <div class="wrapper">
+      <div class="background"></div>
+      <div class="wrapper" ?primary="${this.primary}">
         <div class="info-panel">
           <div class="image-counter">
             ${this.imageNumber}/${this.totalImageNumber}
@@ -152,7 +157,7 @@ export class imageDialog extends DDD {
           </button>
         </div>
         <div class="slide-image">
-          <img class="image" src= ${this.imageUrl[this.imageNumber - 1]} alt = "slide">
+          <img class="image" src= ${this.imageUrl[this.imageNumber - 1]} alt="${this.imageCaption[this.imageNumber - 1]}">
         </div>
         <div class="image-control">
           <button class="left" @click="${this.leftClick}">
@@ -175,7 +180,8 @@ export class imageDialog extends DDD {
       imageCaption: { type: Array, reflect: true },
       imageDescription: { type: Array, reflect: true },
       imageNumber: { type: Number, reflect: true },
-      totalImageNumber: { type: Number, reflect: true }
+      totalImageNumber: { type: Number, reflect: true },
+      primary: { type: Boolean, reflect: true }
     };
   }
 }

@@ -37,13 +37,16 @@ export class mediaImage extends DDD {
                 :host {
                     display: inline-flex;
                     flex-wrap: wrap;
-                    --img-bord-color-primary: var(--ddd-theme-default-wonderPurple);
-                    --img-bord-color-secondary: var(--ddd-theme-default-futureLime);
+                    --img-bord-color: var(--ddd-theme-default-futureLime);
                     --box-shadow: -16px 16px var(--ddd-theme-default-potentialMidnight);
                 }
 
+                :host([primary="true"]) {
+                    --img-bord-color: var(--ddd-theme-default-wonderPurple);
+                }
+
                 .img-color-bord {
-                    background-color: var(--img-bord-color-secondary);
+                    background-color: var(--img-bord-color);
                     text-align: center;
                     width: 20vw;
                     padding: var(--ddd-spacing-4);
@@ -68,10 +71,6 @@ export class mediaImage extends DDD {
                     transition: all .3s ease-in;
                 }
 
-                .img-color-bord:primary {
-                    background-color: var(--img-bord-color-primary);
-                }
-
                 .caption {
                     font-size: var(--ddd-font-size-4xs);
                     background-color: var(--ddd-theme-default-shrineLight);
@@ -85,7 +84,7 @@ export class mediaImage extends DDD {
     render() {
         return html`
             <div class="wrapper">
-                <div class="img-color-bord" ?primary="${this.primary}" @click="${this.handleClick}">
+                <div class="img-color-bord" @click="${this.handleClick}">
                     <img class="image" src="${this.imgSrc}" alt="${this.caption}">
                 </div>
                 <div class="caption">
