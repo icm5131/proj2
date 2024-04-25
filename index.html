@@ -17,14 +17,28 @@
       background-color: #ededed;
     }
 
-     .popup:opened {
+    :popup([opened="true"]) {
       body {
         overflow: hidden;
       }
+
       .img-demo {
         pointer-events: none;
         user-select: none;
       }
+    }
+
+    .meme-section {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .heading {
+      width: 100%;
+    }
+
+    .section-info {
+      width: 60%;
     }
 
     polaris-chip {
@@ -34,7 +48,6 @@
     .img-demo {
       margin: 64px;
     }
-
   </style>
   <title>polaris-chip / my-card</title>
 </head>
@@ -43,12 +56,13 @@
   <div class="img-demo">
     <h1>The Joy of Programming Memes</h1>
     <div class="meme-section">
-      <h2>Debugging Dramas</h2>
-      <media-image
+      <h2 class="heading">Debugging Dramas</h2>
+      <media-image class="img"
         imgSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHWH39-n22ql-S0elN3GFE2iHy4_x9mmUzhCACZFq9kg&s"
-        caption="Finding Errors Debugging Meme" description="This is a meme about how hard it can be to find errors in code." primary="true">
+        caption="Finding Errors Debugging Meme"
+        description="This is a meme about how hard it can be to find errors in code." primary="true">
       </media-image>
-      <p>
+      <p class="section-info">
         The "Debugging Dramas" section of programming memes offers a humorous glimpse into the everyday struggles of
         developers as they navigate the treacherous waters of debugging. These memes capture the universal frustrations
         of
@@ -62,11 +76,8 @@
       </p>
     </div>
     <div class="meme-section">
-      <h2>Stack Overflow Shenanigans</h2>
-      <media-image imgSrc="https://i.redd.it/op96es9026wy.png" caption="Over Using Stack Overflow Meme" description="Stack Overflow 
-        is a popular Q&A platform for developers, offering a global community where coding questions are asked and answered. It's a go-to 
-        resource for developers seeking quick solutions and sharing expertise in programming."></media-image>
-      <p>
+      <h2 class="heading">Stack Overflow Shenanigans</h2>
+      <p class="section-info">
         The "Stack Overflow Shenanigans" section of programming memes offers a light-hearted take on the sometimes
         chaotic and unpredictable nature of seeking solutions on the popular coding Q&A platform. These memes humorously
         depict developers encountering a wide array of solutions, ranging from brilliantly concise answers to
@@ -75,20 +86,49 @@
         the essence of the online coding community's camaraderie and resilience in the face of perplexing coding
         conundrums.
       </p>
+      <media-image class="img" imgSrc="https://i.redd.it/op96es9026wy.png" caption="Over Using Stack Overflow Meme"
+        description="Stack Overflow is a popular Q&A platform for developers, offering a global community where coding questions are asked and answered. 
+        It's a go-to resource for developers seeking quick solutions and sharing expertise in programming."></media-image>
     </div>
     <div class="meme-section">
-      <h2>Stack Overflow Shenanigans</h2>
-      <media-image imgSrc="https://programmerhumor.io/wp-content/uploads/2021/07/programmerhumor-io-programming-memes-b8b5b0dd8203d69.png" 
-      caption="Project Deadline Meme" description="This is a meme about how coding project deadlines slowly creep up and stress the programmer out. 
-      Then when the deadline gets extended the developers continue to take their time." primary="true"></media-image>
-      <p>
-        The "Stack Overflow Shenanigans" section of programming memes offers a light-hearted take on the sometimes
-        chaotic and unpredictable nature of seeking solutions on the popular coding Q&A platform. These memes humorously
-        depict developers encountering a wide array of solutions, ranging from brilliantly concise answers to
-        hilariously convoluted ones. With characters from popular culture often making appearances to express the
-        bewildering array of emotions experienced when delving into the depths of Stack Overflow, these memes capture
-        the essence of the online coding community's camaraderie and resilience in the face of perplexing coding
-        conundrums.
+      <h2 class="heading">Deadline Dilemmas</h2>
+      <media-image class="img"
+        imgSrc="https://programmerhumor.io/wp-content/uploads/2021/07/programmerhumor-io-programming-memes-b8b5b0dd8203d69.png"
+        caption="Project Deadline Meme"
+        description="This is a meme about how coding project deadlines slowly creep up and stress the programmer out. Then when the deadline gets extended the developers continue to take their time."
+        primary="true"></media-image>
+      <p class="section-info">
+        The "Deadline Dilemmas" section, programming memes humorously capture the stress and urgency developers face
+        when racing against project deadlines. These memes offer relatable snapshots of procrastination, late-night
+        coding sessions, and the relentless pursuit of timely project delivery.
+      </p>
+    </div>
+    <div class="meme-section">
+      <h2 class="heading">Language Wars</h2>
+      <p class="section-info">
+        The "Language Wars" section of programming memes, developers engage in playful banter about the
+        merits of different programming languages. These memes humorously depict the passionate debates and allegiances
+        surrounding various programming languages, often using pop culture references or clever comparisons to
+        illustrate their points. From poking fun at syntax quirks to celebrating the strengths of each language, these
+        memes showcase the vibrant and diverse landscape of programming languages and the friendly rivalry within the
+        developer community.
+      </p>
+      <media-image class="img" imgSrc="https://i.redd.it/rclhx473cmu91.jpg" caption="Python Language War Meme"
+        description="This meme is commenting on python programmers and that the reason why they use python is because they can't learn any other language."></media-image>
+    </div>
+    <div class="meme-section">
+      <h2 class="heading">Battling Imposter Syndrome</h2>
+      <media-image class="img"
+        imgSrc="https://preview.redd.it/my-experience-as-a-professional-programmer-for-6-years-v0-ewhyk2us670b1.png?auto=webp&s=901937a84fc8fa843e4c569a209e2f8ff636e1bd"
+        caption="Imposter and Overconfidence Meme"
+        description="This image is a joke about how programmers will bounce between thinking they know everything and thinkgning they know nothing and don't belong in development."
+        primary="true"></media-image>
+      <p class="section-info">
+        The "Imposter Syndrome" section of programming memes, developers find comfort and camaraderie in humorously
+        acknowledging feelings of self-doubt and inadequacy. These memes provide a light-hearted outlet for individuals
+        grappling with imposter syndrome, reminding them that they are not alone in their occasional struggles with
+        confidence. Through relatable jokes and supportive messages, these memes foster a sense of solidarity within the
+        developer community, encouraging individuals to embrace their achievements and overcome self-doubt.
       </p>
     </div>
   </div>

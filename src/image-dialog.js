@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
+import { ref } from 'lit/directives/ref.js';
 
 
 export class imageDialog extends DDD {
@@ -15,6 +16,8 @@ export class imageDialog extends DDD {
     this.imageUrl = [];
     this.imageCaption = [];
     this.imageDescription = [];
+    this.imagePrimary = []
+    this.currPrimary = "false";
     this.imageNumber = 1; //current number shown
     this.totalImageNumber = null;
   }
@@ -24,6 +27,15 @@ export class imageDialog extends DDD {
     
       :host {
         display: none;
+        --bord-wrap-color: var(--ddd-theme-default-shrineLight);
+      }
+
+      :host([currPrimary="true"]) {
+        --bord-wrap-color: var(--ddd-theme-default-creekTeal);
+      }
+
+      :host([currPrimary="false"]) {
+        --bord-wrap-color: var(--ddd-theme-default-creekLight);
       }
 
       :host([opened]) {
@@ -39,7 +51,7 @@ export class imageDialog extends DDD {
       .image-control button {
         background-color: transparent;
         border: var(--ddd-border-sm);
-        border-color: var(--ddd-theme-default-creekTeal);
+        border-color: var(--ddd-theme-default-shrineLight);
         border-radius: var(--ddd-radius-xs);
       }
 
@@ -48,7 +60,7 @@ export class imageDialog extends DDD {
         padding: var(--ddd-spacing-4);
         width: 90vw;
         max-height: 90vh;
-        background-color: var(--ddd-theme-default-shrineLight);
+        background-color: var(--bord-wrap-color);
         color: black;
         position: relative;
         border: var(--ddd-border-lg);
@@ -74,13 +86,13 @@ export class imageDialog extends DDD {
       }
     
       .close {
-        width: 10%;
         text-align: center;
         transform: scale(2);
         margin: var(--ddd-spacing-1);
       }
     
       .description {
+        text-align: left;
         grid-column-start: 2;
         width: 80%;
         margin: auto;
@@ -139,18 +151,16 @@ export class imageDialog extends DDD {
       this.imageUrl.push(image.getAttribute('imgSrc'));
       this.imageCaption.push(image.getAttribute('caption'));
       this.imageDescription.push(image.getAttribute('description'));
-      this.primary = image.getAttribute('primary');
+      this.imagePrimary.push(image.getAttribute('primary'));
     })
 
-    console.log(this.primary);
-    console.log(this.imageDescription);
-    console.log(this.imageCaption);
-    console.log(this.imageUrl);
+    console.log(this.imagePrimary);
     this.totalImageNumber = this.imageUrl.length;
 
     window.addEventListener('image-clicked', (e) => {
       var url = e.target.attributes.imgSrc.nodeValue;
       this.imageNumber = this.imageUrl.indexOf(url) + 1;
+      this.updateBG();
       this.opened = true;
     })
   }
@@ -161,6 +171,7 @@ export class imageDialog extends DDD {
     else {
       this.imageNumber = 1;
     }
+    this.updateBG();
     this.requestUpdate();
   }
   leftClick() {
@@ -169,7 +180,13 @@ export class imageDialog extends DDD {
     else {
       this.imageNumber = this.totalImageNumber;
     }
+    this.updateBG();
     this.requestUpdate();
+  }
+
+  updateBG() {
+    this.currPrimary = this.imagePrimary[this.imageNumber - 1];
+    console.log(this.currPrimary);
   }
 
   render() {
@@ -214,7 +231,8 @@ export class imageDialog extends DDD {
       imageDescription: { type: Array, reflect: true },
       imageNumber: { type: Number, reflect: true },
       totalImageNumber: { type: Number, reflect: true },
-      primary: { type: Boolean, reflect: true }
+      imagePrimary: { type: Array, reflect: true },
+      currPrimary: { type: String, reflect: true }
     };
   }
 }

@@ -39,6 +39,7 @@ export class mediaImage extends DDD {
                     flex-wrap: wrap;
                     --img-bord-color: var(--ddd-theme-default-creekLight);
                     --box-shadow: -16px 16px var(--ddd-theme-default-potentialMidnight);
+                    margin: var(--ddd-spacing-5);
                 }
 
                 :host([primary="true"]) {
