@@ -17,6 +17,16 @@
       background-color: #ededed;
     }
 
+     .popup:opened {
+      body {
+        overflow: hidden;
+      }
+      .img-demo {
+        pointer-events: none;
+        user-select: none;
+      }
+    }
+
     polaris-chip {
       margin: 16px;
     }
@@ -30,7 +40,6 @@
 </head>
 
 <body>
-  <div class="blackedout">
   <div class="img-demo">
     <h1>The Joy of Programming Memes</h1>
     <div class="meme-section">
@@ -56,7 +65,22 @@
       <h2>Stack Overflow Shenanigans</h2>
       <media-image imgSrc="https://i.redd.it/op96es9026wy.png" caption="Over Using Stack Overflow Meme" description="Stack Overflow 
         is a popular Q&A platform for developers, offering a global community where coding questions are asked and answered. It's a go-to 
-        resource for developers seeking quick solutions and sharing expertise in programming." primary></media-image>
+        resource for developers seeking quick solutions and sharing expertise in programming."></media-image>
+      <p>
+        The "Stack Overflow Shenanigans" section of programming memes offers a light-hearted take on the sometimes
+        chaotic and unpredictable nature of seeking solutions on the popular coding Q&A platform. These memes humorously
+        depict developers encountering a wide array of solutions, ranging from brilliantly concise answers to
+        hilariously convoluted ones. With characters from popular culture often making appearances to express the
+        bewildering array of emotions experienced when delving into the depths of Stack Overflow, these memes capture
+        the essence of the online coding community's camaraderie and resilience in the face of perplexing coding
+        conundrums.
+      </p>
+    </div>
+    <div class="meme-section">
+      <h2>Stack Overflow Shenanigans</h2>
+      <media-image imgSrc="https://programmerhumor.io/wp-content/uploads/2021/07/programmerhumor-io-programming-memes-b8b5b0dd8203d69.png" 
+      caption="Project Deadline Meme" description="This is a meme about how coding project deadlines slowly creep up and stress the programmer out. 
+      Then when the deadline gets extended the developers continue to take their time." primary="true"></media-image>
       <p>
         The "Stack Overflow Shenanigans" section of programming memes offers a light-hearted take on the sometimes
         chaotic and unpredictable nature of seeking solutions on the popular coding Q&A platform. These memes humorously
@@ -68,9 +92,8 @@
       </p>
     </div>
   </div>
-  </div>
 
-  <image-dialog></image-dialog>
+  <image-dialog class="popup"></image-dialog>
 
   <script type="module" src="./src/media-image.js"></script>
   <script type="module" src="./src/image-dialog.js"></script>

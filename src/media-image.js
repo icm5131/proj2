@@ -37,12 +37,12 @@ export class mediaImage extends DDD {
                 :host {
                     display: inline-flex;
                     flex-wrap: wrap;
-                    --img-bord-color: var(--ddd-theme-default-futureLime);
+                    --img-bord-color: var(--ddd-theme-default-creekLight);
                     --box-shadow: -16px 16px var(--ddd-theme-default-potentialMidnight);
                 }
 
                 :host([primary="true"]) {
-                    --img-bord-color: var(--ddd-theme-default-wonderPurple);
+                    --img-bord-color: var(--ddd-theme-default-creekTeal);
                 }
 
                 .img-color-bord {
