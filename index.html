@@ -17,17 +17,6 @@
       background-color: #ededed;
     }
 
-    :popup([opened="true"]) {
-      body {
-        overflow: hidden;
-      }
-
-      .img-demo {
-        pointer-events: none;
-        user-select: none;
-      }
-    }
-
     .meme-section {
       display: flex;
       flex-wrap: wrap;
@@ -41,18 +30,22 @@
       width: 60%;
     }
 
-    polaris-chip {
-      margin: 16px;
-    }
-
     .img-demo {
       margin: 64px;
+    }
+
+    .stopScroll {
+      overflow: hidden;
+    }
+
+    .stopEvent {
+      user-select: none;
     }
   </style>
   <title>polaris-chip / my-card</title>
 </head>
 
-<body>
+<body onclick="dialogOpened()">
   <div class="img-demo">
     <h1>The Joy of Programming Memes</h1>
     <div class="meme-section">
@@ -60,7 +53,8 @@
       <media-image class="img"
         imgSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHWH39-n22ql-S0elN3GFE2iHy4_x9mmUzhCACZFq9kg&s"
         caption="Finding Errors Debugging Meme"
-        description="This is a meme about how hard it can be to find errors in code." primary="true">
+        description="This is a meme about how hard it can be to find errors in code. It shows how desperate developers feel when trying to make a program work when there's an error."
+        primary="true" onclick="dialogOpened()">
       </media-image>
       <p class="section-info">
         The "Debugging Dramas" section of programming memes offers a humorous glimpse into the everyday struggles of
@@ -134,6 +128,19 @@
   </div>
 
   <image-dialog class="popup"></image-dialog>
+
+  <script>
+    const dialogOpened = () => {
+      if (!document.getElementsByClassName('popup')[0].hasAttribute('opened')) {
+        document.getElementsByClassName('img-demo')[0].classList.remove("stopEvent");
+        document.getElementsByTagName('body')[0].classList.remove("stopScroll");
+      }
+      else {
+        document.getElementsByClassName('img-demo')[0].classList.add("stopEvent");
+        document.getElementsByTagName('body')[0].classList.add("stopScroll");
+      }
+    }
+  </script>
 
   <script type="module" src="./src/media-image.js"></script>
   <script type="module" src="./src/image-dialog.js"></script>

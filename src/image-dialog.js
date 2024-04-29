@@ -48,18 +48,24 @@ export class imageDialog extends DDD {
         right: 0;
       }
 
-      .image-control button {
-        background-color: transparent;
-        border: var(--ddd-border-sm);
-        border-color: var(--ddd-theme-default-shrineLight);
-        border-radius: var(--ddd-radius-xs);
+      .mask {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 100;
+        width: 100vw;
+        height: 100vh;
+        opacity: 0.9;
+        user-select: none;
+        background-color: var(--ddd-theme-default-coalyGray);
       }
 
       .wrapper {
         margin: auto;
+        z-index: 1000;
         padding: var(--ddd-spacing-4);
         width: 90vw;
-        max-height: 90vh;
+        height: 96vh;
         background-color: var(--bord-wrap-color);
         color: black;
         position: relative;
@@ -67,17 +73,26 @@ export class imageDialog extends DDD {
         border-color: var(--ddd-theme-default-potentialMidnight);
         border-radius: var(--ddd-radius-md);
         overflow-y: scroll;
+        text-align: center;
       }
 
       .wrapper:not(:focus-within) {
         color: var(--ddd-theme-default-potentialMidnight);
         transition: color 0.01s;
       }
+
+      .background {
+        width: 5vw;
+        z-index: 1000;
+        display: grid;
+        gap: var(--ddd-spacing-4);
+      }
     
       .info-panel {
         width: 100%;
         display: grid;
         gap: var(--ddd-spacing-5);
+        text-align: left;
       }
 
       .closebtn {
@@ -89,6 +104,15 @@ export class imageDialog extends DDD {
         text-align: center;
         transform: scale(2);
         margin: var(--ddd-spacing-1);
+        background-color: transparent;
+        border: var(--ddd-border-sm);
+        border-color: var(--ddd-theme-default-potentialMidnight);
+        border-radius: var(--ddd-radius-xs);
+      }
+
+      .close:focus,
+      .close:hover {
+        background-color: var(--ddd-theme-default-limestoneLight);
       }
     
       .description {
@@ -106,33 +130,38 @@ export class imageDialog extends DDD {
       .slide-image {
         text-align: center;
         margin: var(--ddd-spacing-6);
-        height: 80%;
-        overflow: hidden;
+        height: 70%;
+        overflow-y: scroll;
       }     
 
       .image {
-        min-width: 40vw;
-        max-width: 80vw;
+        min-height: 50vh;
+        max-width: 40vw;
+        max-height: 60vh;
         margin: auto;
       }
+
+      .img-preview {
+        overflow-x: scroll;
+        margin: auto;
+        opacity: .9;
+      }
+
+      .pre-img {
+        width: 5vw;
+      }
     
-      .image-control {
-        margin: var(--ddd-spacing-4);
-        display: grid;
-        justify-content: space-between;  
-        position: absolute;
-        bottom: 0;
-        width: 95%;
+      .img-select {
+        margin: auto;
+        transform: scale(2);
+        background-color: transparent;
+        color: white;
+        border: none;
       }
 
-      .left {
-        grid-column-start: 1;
-        transform: scale(2);
-      }
-
-      .right {
-        grid-column-start: 3;
-        transform: scale(2);
+      .img-select:hover,
+      .img-select:focus {
+        background-color: var(--ddd-theme-default-coalyGray);
       }
     `;
   }
@@ -154,7 +183,6 @@ export class imageDialog extends DDD {
       this.imagePrimary.push(image.getAttribute('primary'));
     })
 
-    console.log(this.imagePrimary);
     this.totalImageNumber = this.imageUrl.length;
 
     window.addEventListener('image-clicked', (e) => {
@@ -186,12 +214,16 @@ export class imageDialog extends DDD {
 
   updateBG() {
     this.currPrimary = this.imagePrimary[this.imageNumber - 1];
-    console.log(this.currPrimary);
   }
 
   render() {
     return (!this.opened) ? `` : html`
-      <div class="background"></div>
+      <div class="mask"></div>
+      <div class="background">
+        <button class="left img-select" @click="${this.leftClick}">
+          ←
+        </button>
+      </div>
       <div class="wrapper">
         <div class="info-panel">
           <div class="image-counter">
@@ -209,15 +241,17 @@ export class imageDialog extends DDD {
         <div class="slide-image">
           <img class="image" src= ${this.imageUrl[this.imageNumber - 1]} alt="${this.imageCaption[this.imageNumber - 1]}">
         </div>
-        <div class="image-control">
-          <button class="left" @click="${this.leftClick}">
-            ←
-          </button>
-          <button class="right" @click="${this.rightClick}">
-            →
-          </button>
+        <div class="img-preview">
+          ${this.imageUrl.map((url) => html`
+            <img class="pre-img" src="${url}">
+          `)}
         </div>
       </div>       
+      <div class="background">
+        <button class="right img-select" @click="${this.rightClick}">
+          →
+        </button>
+      </div>
     `;
   }
 

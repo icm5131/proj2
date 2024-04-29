@@ -17,8 +17,6 @@ export class mediaImage extends DDD {
     }
 
     handleClick() {
-        console.log("Image Clicked");
-
         const evt = new CustomEvent("image-clicked", {
             bubbles: true,
             composed: true,
@@ -31,7 +29,7 @@ export class mediaImage extends DDD {
     }
 
     static get styles() {
-        return [ 
+        return [
             super.styles,
             css`
                 :host {
